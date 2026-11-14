@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>muis — a terminal built for Veldmuis</title>
+    <meta
+      name="description"
+      content="muis is a Linux terminal with Rust PTY workers, xterm.js rendering, Breeze chrome, session workspaces, notifications, and an optional local assistant."
+    />
+    <meta property="og:title" content="muis — a terminal built for Veldmuis" />
+    <meta
+      property="og:description"
+      content="Real PTYs, one worker per session, Breeze chrome, and an optional local assistant. MIT licensed."
+    />
+    <meta property="og:image" content="https://muis.veldmuislinux.org/assets/screenshot.png" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/muis.png" type="image/png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="/">
+        <img src="assets/muis.png" alt="" width="28" height="28" />
+        <span>muis</span>
+      </a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#snor">Snor</a>
+        <a href="#install">Install</a>
+        <a href="https://github.com/ruannnebornman/muis">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <p class="eyebrow">Veldmuis terminal · Linux x86_64 · MIT</p>
+        <h1>A terminal that keeps<br />sessions, not tabs.</h1>
+        <p class="lede">
+          muis pairs a Rust PTY worker with an xterm.js frontend in a Tauri
+          window. One process per session, Breeze chrome, live cwd and git
+          state, desktop notifications, and an optional local assistant that
+          never sends your terminal off the machine.
+        </p>
+        <div class="cta">
+          <a class="button primary" href="https://github.com/ruannnebornman/muis/releases/latest"
+            >Download latest</a
+          >
+          <a class="button" href="https://github.com/ruannnebornman/muis">Read the source</a>
+        </div>
+        <p class="fine">Ships in Veldmuis as <code>veldmuis-muis</code>.</p>
+      </section>
+
+      <figure class="shot">
+        <img
+          src="assets/screenshot.png"
+          alt="muis with three session workspaces, a tab bar, and a fastfetch banner in the terminal"
+          width="2200"
+          height="1400"
+          loading="lazy"
+        />
+        <figcaption>Sessions on the left, tabs above the PTY, status below.</figcaption>
+      </figure>
+
+      <section id="features">
+        <h2>What it does</h2>
+        <div class="grid">
+          <article>
+            <h3>One worker per session</h3>
+            <p>
+              Every session owns a <code>muis-worker</code> process and a real
+              PTY. A crash takes down one session, never the window or the
+              others.
+            </p>
+          </article>
+          <article>
+            <h3>Folder-shaped sessions</h3>
+            <p>
+              Sessions group tabs by project directory. Switching sessions
+              restores the tab you were on; tabs open in the active shell's
+              live cwd, not a stale default.
+            </p>
+          </article>
+          <article>
+            <h3>Shell-aware</h3>
+            <p>
+              OSC 7 cwd and OSC 0/2 titles from the real shell, an OSC 133
+              last-command bar with exit code and timing, and a status bar with
+              cwd, git branch, session, clock, and shell.
+            </p>
+          </article>
+          <article>
+            <h3>Notifications that know the tab</h3>
+            <p>
+              Agent TUIs and hooks report through OSC 9/777/99 or
+              <code>muis-notify</code>. Background tabs badge, and the OS toast
+              fires only when muis is unfocused.
+            </p>
+          </article>
+          <article>
+            <h3>Search across sessions</h3>
+            <p>
+              Search the active terminal, one session, or every open tab and
+              jump straight to the matching line.
+            </p>
+          </article>
+          <article>
+            <h3>Themes and shortcuts</h3>
+            <p>
+              Five accent themes over the Breeze base, per-workspace overrides,
+              a command palette, and rebindable chords.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="snor" class="snor">
+        <div>
+          <p class="eyebrow">Optional · local · offline</p>
+          <h2>Snor, a local assistant</h2>
+          <p>
+            Snor runs a supervised <code>llama-server</code> on loopback and
+            answers in a docked side panel. Weights are never bundled: install
+            one of three verified Q4_K_M presets from settings, or point it at
+            your own GGUF. Downloads resume and are checked against a published
+            SHA-256.
+          </p>
+          <p>
+            Context is explicit. Attach the tab's cwd and, if you ask, recent
+            scrollback; the payload is shown before sending, and an optional
+            mask hides token and credential shapes. Conversations persist per
+            workspace without that context.
+          </p>
+          <p>
+            Read-only lookups stay inside the workspace: <code>/git</code>,
+            <code>/docs</code>, <code>/file &lt;path&gt;</code>,
+            <code>/todos</code>, and <code>/sessions</code>. Nothing can write
+            or run a command the model chose.
+          </p>
+        </div>
+        <div class="panel">
+          <p class="panel-title">Install the engine</p>
+          <pre><code>sudo pacman -S llama-cpp ggml-vulkan</code></pre>
+          <p class="panel-note">
+            Arch only. Llama.cpp is a runtime dependency, so the base terminal
+            is unchanged when Snor is unused.
+          </p>
+        </div>
+      </section>
+
+      <section id="install">
+        <h2>Install</h2>
+        <div class="install-grid">
+          <article>
+            <h3>Veldmuis</h3>
+            <pre><code>sudo pacman -S veldmuis-muis</code></pre>
+            <p>The signed package repackages the upstream Linux tarball.</p>
+          </article>
+          <article>
+            <h3>Arch and other Linux</h3>
+            <pre><code># download muis-&lt;version&gt;-x86_64-linux.tar.gz
+tar xzf muis-*-x86_64-linux.tar.gz
+./muis-*/muis</code></pre>
+            <p>
+              Needs GTK 3, libsoup 3, and WebKitGTK 4.1. The tarball carries
+              <code>muis</code>, <code>muis-worker</code>,
+              <code>muis-notify</code>, and <code>muis-agent</code>.
+            </p>
+          </article>
+          <article>
+            <h3>From source</h3>
+            <pre><code>cargo build --release
+npm ci --prefix src-ui
+npm run build --prefix src-ui</code></pre>
+            <p>Rust and Node. Tests cover PTYs, IPC, UI state, and a native smoke run.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="limits">
+        <h2>Scope</h2>
+        <p>
+          muis targets Linux x86_64. It is one terminal per tab by design: no
+          split panes, no session export/import, no web or Flatpak build.
+          Windows, AppImage, and AUR packaging were removed on purpose.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <img src="assets/muis.png" alt="" width="18" height="18" />
+        muis is MIT licensed and part of <a href="https://veldmuislinux.org/">Veldmuis</a>.
+      </p>
+      <p>
+        <a href="https://github.com/ruannnebornman/muis">Source</a> ·
+        <a href="https://github.com/ruannnebornman/muis/releases">Releases</a> ·
+        <a href="https://github.com/ruannnebornman/muis/blob/main/docs/architecture-map.html"
+          >Architecture</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
